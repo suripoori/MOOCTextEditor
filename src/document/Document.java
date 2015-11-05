@@ -53,7 +53,21 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
-	    return 0;
+		//String pattern = "[^eE][AIOUYaiouy]+|[AIOUYaiouy]+[^eE]|^[aeiouyAEIOUY]+|[aeiouyAEIOUY]+[a-zA-Z]|^[^aeiouyAEIOUY]*[eE]";
+	    //String pattern = "[aeiouyAEIOUY]+[^aeiouyAEIOUY]+|^[^aeiouyAEIOUY]+[eE]+$|^[aeiouyAEIOUY]+$|[aiouyAIOUY]+$";
+		String pattern = "([aeiouyAEIOUY]){2,}|[aiouyAIOUY]|[eE][^\b]|^[^aeiouyAEIOUY]+[eE]+$|^[eE]+$";
+		System.out.println("Word is: "+word);
+	    ArrayList<String> tokens = new ArrayList<String>();
+	    Pattern tokSplitter = Pattern.compile(pattern);
+	    Matcher m = tokSplitter.matcher(word);
+		while (m.find()) {
+			tokens.add(m.group());
+		}
+		System.out.println("Tokens are: ");
+		for (String token : tokens){
+			System.out.println(token);
+		}
+	    return tokens.size();
 	}
 	
 	/** A method for testing
@@ -117,7 +131,11 @@ public abstract class Document {
 	public double getFleschScore()
 	{
 	    // TODO: Implement this method
-	    return 0.0;
+	    double numWords = (double)getNumWords();
+	    double numSentences = (double)getNumSentences();
+	    double numSyllables = (double)getNumSyllables();
+	    double flesch_score = 206.835 - 1.015*(numWords/numSentences) - 84.6*(numSyllables/numWords);
+		return flesch_score;
 	}
 	
 	

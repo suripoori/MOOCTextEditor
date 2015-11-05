@@ -30,7 +30,8 @@ public class BasicDocument extends Document
 	{
 		//TODO: Implement this method.  See the Module 1 support videos 
 	    // if you need help.
-	    return 0;
+		List<String> words = getWords();
+		return words.size();
 	}
 	
 	/**
@@ -46,7 +47,10 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 1 support videos 
         // if you need help.
-        return 0;
+        //String[] sentences = getSentences();
+		//return sentences.length;
+        List<String> sentences = getSentences();
+		return sentences.size();
 	}
 	
 	/**
@@ -62,10 +66,33 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 1 support videos 
         // if you need help.
-        return 0;
+		int numSyllables = 0;
+		List<String> words = getWords();
+		for (String word : words){
+			numSyllables += countSyllables(word);
+		}
+		return numSyllables;
 	}
 	
+	public String[] getSentencesBySplit()
+	{
+		return this.getText().split("[.!?]+ *");
+	}
 	
+	public String[] getWords(String sentence)
+	{
+		return sentence.split("[^a-zA-Z]+");
+	}
+	
+	public List<String> getWords()
+	{
+		return getTokens("[a-zA-Z]+");
+	}
+	
+	public List<String> getSentences()
+	{
+		return getTokens("[^.!?]+");
+	}
 	/* The main method for testing this class. 
 	 * You are encouraged to add your own tests.  */
 	public static void main(String[] args)
@@ -76,7 +103,8 @@ public class BasicDocument extends Document
 		testCase(new BasicDocument(""), 0, 0, 0);
 		testCase(new BasicDocument("sentence, with, lots, of, commas.!  "
 		        + "(And some poaren)).  The output is: 7.5."), 15, 11, 4);
-		testCase(new BasicDocument("many???  Senteeeeeeeeeences are"), 6, 3, 2);		
+		testCase(new BasicDocument("many???  Senteeeeeeeeeences are"), 6, 3, 2);
+		testCase(new BasicDocument("e aei ie ae ee et the"), 7, 7, 1);
 	}
 	
 }
