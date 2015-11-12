@@ -45,6 +45,22 @@ public class EfficientDocument extends Document {
 		
 		// TODO: Finish this method.  Remember the countSyllables method from 
 		// Document.  That will come in handy here.
+		boolean newSentence = false;
+		for (String token : tokens){
+			//System.out.println(token);
+			if(isWord(token)){
+				newSentence = true;
+				numWords++;
+				numSyllables += super.countSyllables(token);
+			}
+			else{
+				numSentences++;
+				newSentence = false;
+			}
+		}
+		if(newSentence){
+			numSentences++;
+		}
 	}
 	
 	
@@ -58,7 +74,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumWords() {
 		//TODO: write this method.  Hint: It's simple
-	    return 0;
+		return numWords;
 	}
 
 	/**
@@ -72,7 +88,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumSentences() {
         //TODO: write this method.  Hint: It's simple
-        return 0;
+		return numSentences;
 	}
 
 	/**
@@ -86,7 +102,7 @@ public class EfficientDocument extends Document {
 	@Override
 	public int getNumSyllables() {
         //TODO: write this method.  Hint: It's simple
-        return 0;
+		return numSyllables;
 	}
 	
 	// Can be used for testing
@@ -100,7 +116,7 @@ public class EfficientDocument extends Document {
         testCase(new EfficientDocument("sentence, with, lots, of, commas.!  "
                 + "(And some poaren)).  The output is: 7.5."), 15, 11, 4);
         testCase(new EfficientDocument("many???  Senteeeeeeeeeences are"), 6, 3, 2);    
-		
+        testCase(new BasicDocument("e aei ie ae ee et the"), 7, 7, 1);
 	}
 	
 

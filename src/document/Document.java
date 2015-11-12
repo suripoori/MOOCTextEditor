@@ -48,14 +48,14 @@ public abstract class Document {
 	// You will probably NOT need to add a countWords or a countSentences method
 	// here.  The reason we put countSyllables here because we'll use it again
 	// next week when we implement the EfficientDocument class.
-	protected int countSyllables(String word)
+	protected static int countSyllables(String word)
 	{
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
 		//String pattern = "[^eE][AIOUYaiouy]+|[AIOUYaiouy]+[^eE]|^[aeiouyAEIOUY]+|[aeiouyAEIOUY]+[a-zA-Z]|^[^aeiouyAEIOUY]*[eE]";
 	    //String pattern = "[aeiouyAEIOUY]+[^aeiouyAEIOUY]+|^[^aeiouyAEIOUY]+[eE]+$|^[aeiouyAEIOUY]+$|[aiouyAIOUY]+$";
-		String pattern = "([aeiouyAEIOUY]){2,}|[aiouyAIOUY]|[eE][^\b]|^[^aeiouyAEIOUY]+[eE]+$|^[eE]+$";
+		/*String pattern = "([aeiouyAEIOUY]){2,}|[aiouyAIOUY]|[eE][^\b]|^[^aeiouyAEIOUY]+[eE]+$|^[eE]+$";
 		System.out.println("Word is: "+word);
 	    ArrayList<String> tokens = new ArrayList<String>();
 	    Pattern tokSplitter = Pattern.compile(pattern);
@@ -67,7 +67,27 @@ public abstract class Document {
 		for (String token : tokens){
 			System.out.println(token);
 		}
-	    return tokens.size();
+	    return tokens.size();*/
+		//System.out.print("Counting syllables in " + word + "...");
+		int numSyllables = 0;
+		boolean newSyllable = true;
+		String vowels = "aeiouy";
+		char[] cArray = word.toCharArray();
+		for (int i = 0; i < cArray.length; i++)
+		{
+		    if (i == cArray.length-1 && cArray[i] == 'e' && newSyllable && numSyllables > 0) {
+                numSyllables--;
+            }
+		    if (newSyllable && vowels.indexOf(Character.toLowerCase(cArray[i])) >= 0) {
+				newSyllable = false;
+				numSyllables++;
+			}
+			else if (vowels.indexOf(Character.toLowerCase(cArray[i])) < 0) {
+				newSyllable = true;
+			}
+		}
+		//System.out.println( "found " + numSyllables);
+		return numSyllables;
 	}
 	
 	/** A method for testing
