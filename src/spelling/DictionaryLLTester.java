@@ -37,7 +37,6 @@ public class DictionaryLLTester {
 		smallDict.addWord("help");
 		smallDict.addWord("a");
 		smallDict.addWord("subsequent");
-		
 		DictionaryLoader.loadDictionary(largeDict, dictFile);
 	}
 
@@ -48,8 +47,8 @@ public class DictionaryLLTester {
 	public void testSize()
 	{
 		assertEquals("Testing size for empty dict", 0, emptyDict.size());
-		assertEquals("Testing size for small dict", 4, smallDict.size());
-		assertEquals("Testing size for large dict", 4438, largeDict.size());
+		assertEquals("Testing size for small dict", 5, smallDict.size());
+		assertEquals("Testing size for large dict", 4440, largeDict.size());
 	}
 	
 	/** Test the isWord method */
@@ -75,8 +74,6 @@ public class DictionaryLLTester {
 		
 		assertEquals("Testing isWord on small: subsequent", true, smallDict.isWord("subsequent"));
 		assertEquals("Testing isWord on large: subsequent", true, largeDict.isWord("subsequent"));
-		
-		
 	}
 	
 	/** Test the addWord method */
@@ -105,6 +102,8 @@ public class DictionaryLLTester {
 		emptyDict.addWord("XYZAbC");
 		smallDict.addWord("XYZAbC");
 		largeDict.addWord("XYZAbC");
+		smallDict.addWord("123");
+		smallDict.addWord("!@#%");
 
 		assertEquals("Asserting xyzabc is in empty dict", true, emptyDict.isWord("xyzabc"));
 		assertEquals("Asserting xyzabc is in small dict", true, smallDict.isWord("xyzabc"));
@@ -121,7 +120,8 @@ public class DictionaryLLTester {
 		assertEquals("Testing isWord on small: subsequent", true, smallDict.isWord("subsequent"));
 		assertEquals("Testing isWord on large: subsequent", true, largeDict.isWord("subsequent"));
 		
-		
+		assertEquals("Testing isWord on small: 123", true, smallDict.isWord("123"));
+		assertEquals("Testing isWord on small: !@#%", true, smallDict.isWord("!@#%"));
 	}	
 	
 }

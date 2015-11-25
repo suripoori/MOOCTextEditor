@@ -105,6 +105,8 @@ public class DictionaryBSTTester {
 		emptyDict.addWord("XYZAbC");
 		smallDict.addWord("XYZAbC");
 		largeDict.addWord("XYZAbC");
+		smallDict.addWord("123");
+		smallDict.addWord("!@#%");
 
 		assertEquals("Asserting xyzabc is in empty dict", true, emptyDict.isWord("xyzabc"));
 		assertEquals("Asserting xyzabc is in small dict", true, smallDict.isWord("xyzabc"));
@@ -121,7 +123,8 @@ public class DictionaryBSTTester {
 		assertEquals("Testing isWord on small: subsequent", true, smallDict.isWord("subsequent"));
 		assertEquals("Testing isWord on large: subsequent", true, largeDict.isWord("subsequent"));
 		
-		
+		assertEquals("Testing isWord on small: 123", true, smallDict.isWord("123"));
+		assertEquals("Testing isWord on small: !@#%", true, smallDict.isWord("!@#%"));
 	}	
 	
 	
