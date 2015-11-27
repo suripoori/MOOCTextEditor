@@ -7,6 +7,7 @@ package spelling;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * WPTree implements WordPath by dynamically creating a tree of words during a Breadth First
@@ -27,9 +28,9 @@ public class WPTree implements WordPath {
 	public WPTree () {
 		this.root = null;
 		// TODO initialize a NearbyWords object
-		// Dictionary d = new DictionaryHashSet();
-		// DictionaryLoader.loadDictionary(d, "data/dict.txt");
-		// this.nw = new NearbyWords(d);
+		Dictionary d = new DictionaryHashSet();
+		DictionaryLoader.loadDictionary(d, "data/dict.txt");
+		this.nw = new NearbyWords(d);
 	}
 	
 	//This constructor will be used by the grader code
@@ -42,6 +43,32 @@ public class WPTree implements WordPath {
 	public List<String> findPath(String word1, String word2) 
 	{
 	    // TODO: Implement this method.
+		Queue<WPTreeNode> queue = new LinkedList<WPTreeNode>();
+		HashSet<String> visited = new HashSet<String>();
+		boolean found = false;
+		int count = 0; // A counter to break the loop below at some point for impossible paths
+		this.root = new WPTreeNode(word1, null);
+		visited.add(word1);
+		queue.add(root);
+		
+		while(!queue.isEmpty() && !found){
+			if (count >= 10000){
+				break;
+			}
+			WPTreeNode curr = queue.remove();
+			List<String> currDistanceOne = nw.distanceOne(curr.getWord(), true);
+			for(String w : currDistanceOne){
+				if (!visited.contains(w)){
+					WPTreeNode child = curr.addChild(w);
+					visited.add(w);
+					queue.add(child);
+					if (w.equals(word2)){
+						return child.buildPathToRoot();
+					}
+				}
+			}
+			count++;
+		}
 	    return new LinkedList<String>();
 	}
 	
